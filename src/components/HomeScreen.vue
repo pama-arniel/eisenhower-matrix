@@ -1,18 +1,92 @@
-<script setup></script>
+<script setup>
+import NotesSection from './NotesSection.vue'
+
+const allData = [
+  {
+    title: 'DO NOW',
+    notesList: [
+      {
+        key: '',
+        text: 'Sign documents',
+        dateDisplay: 'Dec 11, 2021 Tues'
+      },
+      {
+        key: '',
+        text: 'Create figma designs',
+        dateDisplay: 'Dec 12, 2021 Tues'
+      }
+    ]
+  },
+  {
+    title: 'SCHEDULE',
+    notesList: [
+      {
+        key: '',
+        text: 'Sign documents',
+        dateDisplay: 'Dec 11, 2021 Tues'
+      },
+      {
+        key: '',
+        text: 'Create figma designs',
+        dateDisplay: 'Dec 12, 2021 Tues'
+      }
+    ]
+  },
+  {
+    title: 'DELEGATE',
+    notesList: [
+      {
+        key: '',
+        text: 'Sign documents',
+        dateDisplay: 'Dec 11, 2021 Tues'
+      },
+      {
+        key: '',
+        text: 'Create figma designs',
+        dateDisplay: 'Dec 12, 2021 Tues'
+      }
+    ]
+  },
+  {
+    title: 'DELETE',
+    notesList: [
+      {
+        key: '',
+        text: 'Sign documents',
+        dateDisplay: 'Dec 11, 2021 Tues'
+      },
+      {
+        key: '',
+        text: 'Create figma designs',
+        dateDisplay: 'Dec 12, 2021 Tues'
+      }
+    ]
+  }
+]
+</script>
 
 <template>
-  <div class="row">
+  <div class="row home-page">
     <div class="page-section sidebar">
       <div class="sidebar-inner-section">
-        <div class="list-section"></div>
-        <div class="button">Submit button</div>
+        <div class="list-section">
+          <span class="Note-Text backlog">write script</span>
+          <span class="Note-Text backlog">research on vue.js</span>
+          <span class="Note-Text backlog">study django</span>
+          <span class="Note-Text backlog">write script</span>
+          <span class="Note-Text backlog">research on vue.js</span>
+          <span class="Note-Text backlog">study django</span>
+        </div>
+        <div class="Button">ADD BACKLOG</div>
       </div>
     </div>
-    <div class="page-section main-area grid-section" style="background-color: yellow">
-      <div class="box" style="background-color: orange">One</div>
-      <div class="box" style="background-color: pink">Two</div>
-      <div class="box" style="background-color: violet">Three</div>
-      <div class="box" style="background-color: brown">Four</div>
+    <div class="page-section main-area grid-section">
+      <NotesSection
+        v-for="(notesSection, index) in allData"
+        :key="notesSection.title"
+        :notes-section="notesSection"
+        :box-class="`box${index + 1}`"
+      ></NotesSection>
     </div>
   </div>
   <img alt="Vue logo" class="trash-icon" src="@/assets/trash-icon.png" width="125" height="125" />
@@ -26,11 +100,22 @@
 </template>
 
 <style scoped lang="scss">
+.home-page {
+  background-color: var(--base-white);
+  width: 95%;
+
+  /* Clear floats after the columns */
+  :after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
 .sidebar {
   float: left;
   width: 33.33%;
   height: 100vh;
-  background-color: white;
   display: flex;
   align-items: stretch;
 
@@ -39,25 +124,24 @@
     display: flex;
     flex-direction: column;
     margin: 20px;
-    background-color: violet;
+    background-color: var(--base-light-pink);
 
     .list-section {
-      height: 90%;
-      background-color: blue;
       margin: 20px;
-    }
-
-    .button {
-      padding: 15px;
-      font-size: 17px;
-      color: #fff;
-      border-radius: 30px;
-      background: #428cb5;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      margin: auto 10px 10px 10px;
+      flex-direction: row;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .backlog {
+        color: var(--base-gray);
+        padding: 10px;
+        height: 40px;
+        background-color: var(--base-white);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }
@@ -71,17 +155,6 @@
 .grid-section {
   display: flex;
   flex-flow: row wrap;
-
-  .box {
-    flex-basis: 50%;
-  }
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: '';
-  display: table;
-  clear: both;
 }
 
 .trash-icon {
@@ -117,6 +190,10 @@
 
 /* Responsive layout - when the screen is less than 600px wide */
 @media screen and (max-width: 600px) {
+  .home-page {
+    width: 100%;
+  }
+
   .page-section {
     width: 100%;
   }
@@ -124,6 +201,7 @@
   .grid-section {
     .box {
       flex-basis: 100%;
+      border: var(--base-white);
     }
   }
 }
