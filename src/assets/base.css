@@ -1,4 +1,57 @@
 /* color palette from <https://github.com/vuejs/theme> */
+:root {
+  --base-white: #ffffff;
+  --base-black: #000000;
+  --base-light-pink: #f9f3f3;
+  --base-dark-pink: #f25287;
+  --base-gray: #6e7c7c;
+}
+
+* {
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.Button {
+  padding: 15px;
+  border-radius: 10px;
+  background: var(--base-dark-pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: auto 10px 10px 10px;
+  font-size: 14px;
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.Title-Text {
+  color: var(--base-black);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.Note-Text {
+  color: var(--base-black);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.Note-Subtext {
+  color: var(--base-gray);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 /* :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
