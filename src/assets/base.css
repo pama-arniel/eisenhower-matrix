@@ -8,6 +8,7 @@
   --base-gray: #6e7c7c;
   --base-gray-2: #e5e5e5;
   --base-modal-background: rgba(196, 196, 196, 0.75);
+  --base-text-area-background: rgba(196, 196, 196, 0.3);
 }
 
 * {
@@ -23,7 +24,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin: auto 10px 10px 10px;
   font-size: 14px;
   color: #fff;
   font-style: normal;
@@ -68,6 +68,13 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
+  line-height: normal;
+}
+
+.Edit-Note-Description {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
   line-height: normal;
 }
 
