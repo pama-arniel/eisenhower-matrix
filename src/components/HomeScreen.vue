@@ -5,6 +5,7 @@ import { ref } from 'vue'
 const showModal = ref(false)
 const noteTitle = ref('')
 const currentChosenStatus = ref('')
+const chosenDate = ref()
 
 const chooseStatus = (chosenStatusName) => {
   if (currentChosenStatus.value == '' || currentChosenStatus.value != chosenStatusName) {
@@ -126,8 +127,8 @@ const allData = [
         alt="close icon"
         class="close-icon"
         src="@/assets/x-icon.png"
-        width="125"
-        height="125"
+        width="28"
+        height="28"
         @click="
           () => {
             showModal = false
@@ -135,47 +136,86 @@ const allData = [
         "
       />
       <div class="modal-fields">
-        <input
-          v-model="noteTitle"
-          class="note-title Edit-Note-Title"
-          placeholder="Add title"
-          type="text"
-        />
-        <div class="status-section">
-          <div
-            class="note-status Edit-Note-Status"
-            :class="{ chosen: currentChosenStatus == 'Do now' }"
-            @click="chooseStatus('Do now')"
-          >
-            Do now
+        <div class="upper-section">
+          <input
+            v-model="noteTitle"
+            class="note-title Edit-Note-Title"
+            placeholder="Add title"
+            type="text"
+          />
+          <div class="status-section">
+            <div
+              class="note-status Edit-Note-Status"
+              :class="{ chosen: currentChosenStatus == 'Do now' }"
+              @click="chooseStatus('Do now')"
+            >
+              Do now
+            </div>
+            <div
+              class="note-status Edit-Note-Status"
+              :class="{ chosen: currentChosenStatus == 'Schedule' }"
+              @click="chooseStatus('Schedule')"
+            >
+              Schedule
+            </div>
+            <div
+              class="note-status Edit-Note-Status"
+              :class="{ chosen: currentChosenStatus == 'Delegate' }"
+              @click="chooseStatus('Delegate')"
+            >
+              Delegate
+            </div>
+            <div
+              class="note-status Edit-Note-Status"
+              :class="{ chosen: currentChosenStatus == 'Delete' }"
+              @click="chooseStatus('Delete')"
+            >
+              Delete
+            </div>
+            <div
+              class="note-status Edit-Note-Status"
+              :class="{ chosen: currentChosenStatus == 'Backlog' }"
+              @click="chooseStatus('Backlog')"
+            >
+              Backlog
+            </div>
           </div>
+        </div>
+        <div class="time-and-date-picker">
+          <img
+            alt="clock icon"
+            class="clock-icon"
+            src="@/assets/clock-icon.png"
+            width="36"
+            height="38"
+          />
+          <VueDatePicker v-model="chosenDate"></VueDatePicker>
+        </div>
+        <div class="note-description">
+          <img
+            alt="detail icon"
+            class="detail-icon"
+            src="@/assets/detail-icon.png"
+            width="42"
+            height="43"
+          />
+          <textarea
+            class="note-description-text Edit-Note-Description"
+            placeholder="Add description"
+          ></textarea>
+        </div>
+        <div class="save-section">
           <div
-            class="note-status Edit-Note-Status"
-            :class="{ chosen: currentChosenStatus == 'Schedule' }"
-            @click="chooseStatus('Schedule')"
+            class="Button"
+            style="width: 120px"
+            @click="
+              () => {
+                console.log('show modal')
+                showModal = !showModal
+              }
+            "
           >
-            Schedule
-          </div>
-          <div
-            class="note-status Edit-Note-Status"
-            :class="{ chosen: currentChosenStatus == 'Delegate' }"
-            @click="chooseStatus('Delegate')"
-          >
-            Delegate
-          </div>
-          <div
-            class="note-status Edit-Note-Status"
-            :class="{ chosen: currentChosenStatus == 'Delete' }"
-            @click="chooseStatus('Delete')"
-          >
-            Delete
-          </div>
-          <div
-            class="note-status Edit-Note-Status"
-            :class="{ chosen: currentChosenStatus == 'Backlog' }"
-            @click="chooseStatus('Backlog')"
-          >
-            Backlog
+            Save
           </div>
         </div>
       </div>
@@ -226,6 +266,10 @@ const allData = [
         justify-content: center;
         align-items: center;
       }
+    }
+
+    .Button {
+      margin: auto 10px 10px 10px;
     }
   }
 }
@@ -281,7 +325,6 @@ const allData = [
 
   .section-to-be-edited {
     width: 800px;
-    height: 553px;
     background: var(--base-white);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     position: absolute;
@@ -299,36 +342,86 @@ const allData = [
 
     .modal-fields {
       margin: 60px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      height: 100%;
 
-      input.note-title {
-        width: 100%;
-        padding: 15px 20px;
-        margin: 8px 0;
-        border: none;
-        border-bottom: 0.5px solid var(--base-dark-pink);
-        -webkit-transition: 0.2s;
+      .upper-section {
+        margin-left: 60px;
+
+        input.note-title {
+          width: 100%;
+          padding: 15px 20px;
+          margin: 8px 0;
+          border: none;
+          border-bottom: 0.5px solid var(--base-dark-pink);
+          -webkit-transition: 0.2s;
+        }
+
+        input.note-title:focus {
+          outline: none !important;
+          border: 3px solid var(--base-light-pink);
+        }
+
+        .status-section {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+
+          .note-status {
+            cursor: pointer;
+            border-radius: 10px;
+            padding: 10px 20px;
+          }
+
+          .chosen {
+            color: var(--base-dark-pink);
+            background: var(--base-transparent-pink);
+          }
+        }
       }
 
-      input.note-title:focus {
-        outline: none !important;
-        border: 3px solid var(--base-light-pink);
-      }
-
-      .status-section {
+      .time-and-date-picker {
         display: flex;
         flex-direction: row;
-        gap: 10px;
+        gap: 14px;
 
-        .note-status {
-          cursor: pointer;
-          border-radius: 10px;
-          padding: 10px 20px;
+        .clock-icon {
+          width: 36px;
+          height: 38px;
+          margin-left: 6px;
+        }
+      }
+
+      .note-description {
+        display: flex;
+        flex-direction: row;
+        gap: 14px;
+        height: 128px;
+
+        .detail-icon {
+          width: 42px;
+          height: 43px;
         }
 
-        .chosen {
-          color: var(--base-dark-pink);
-          background: var(--base-transparent-pink);
+        .note-description-text {
+          border: none;
+          resize: none;
+          width: 100%;
+          background-color: var(--base-text-area-background);
+          padding: 10px;
         }
+
+        .note-description-text:focus {
+          outline: none !important;
+          border: 3px solid var(--base-light-pink);
+        }
+      }
+
+      .save-section {
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }
