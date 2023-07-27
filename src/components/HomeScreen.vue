@@ -1,5 +1,18 @@
 <script setup>
 import NotesSection from './NotesSection.vue'
+import { ref } from 'vue'
+
+const showModal = ref(false)
+const noteTitle = ref('')
+const currentChosenStatus = ref('')
+
+const chooseStatus = (chosenStatusName) => {
+  if (currentChosenStatus.value == '' || currentChosenStatus.value != chosenStatusName) {
+    currentChosenStatus.value = chosenStatusName
+  } else {
+    currentChosenStatus.value = ''
+  }
+}
 
 const allData = [
   {
@@ -77,7 +90,17 @@ const allData = [
           <span class="Note-Text backlog">research on vue.js</span>
           <span class="Note-Text backlog">study django</span>
         </div>
-        <div class="Button">ADD BACKLOG</div>
+        <div
+          class="Button"
+          @click="
+            () => {
+              console.log('show modal')
+              showModal = !showModal
+            }
+          "
+        >
+          ADD BACKLOG
+        </div>
       </div>
     </div>
     <div class="page-section main-area grid-section">
@@ -96,6 +119,67 @@ const allData = [
     <a href="#"><i class="fa fa-envelope"></i></a>
     <a href="#"><i class="fa fa-globe"></i></a>
     <a href="#"><i class="fa fa-trash"></i></a>
+  </div>
+  <div class="add-backlog-modal" v-if="showModal">
+    <div class="section-to-be-edited">
+      <img
+        alt="close icon"
+        class="close-icon"
+        src="@/assets/x-icon.png"
+        width="125"
+        height="125"
+        @click="
+          () => {
+            showModal = false
+          }
+        "
+      />
+      <div class="modal-fields">
+        <input
+          v-model="noteTitle"
+          class="note-title Edit-Note-Title"
+          placeholder="Add title"
+          type="text"
+        />
+        <div class="status-section">
+          <div
+            class="note-status Edit-Note-Status"
+            :class="{ chosen: currentChosenStatus == 'Do now' }"
+            @click="chooseStatus('Do now')"
+          >
+            Do now
+          </div>
+          <div
+            class="note-status Edit-Note-Status"
+            :class="{ chosen: currentChosenStatus == 'Schedule' }"
+            @click="chooseStatus('Schedule')"
+          >
+            Schedule
+          </div>
+          <div
+            class="note-status Edit-Note-Status"
+            :class="{ chosen: currentChosenStatus == 'Delegate' }"
+            @click="chooseStatus('Delegate')"
+          >
+            Delegate
+          </div>
+          <div
+            class="note-status Edit-Note-Status"
+            :class="{ chosen: currentChosenStatus == 'Delete' }"
+            @click="chooseStatus('Delete')"
+          >
+            Delete
+          </div>
+          <div
+            class="note-status Edit-Note-Status"
+            :class="{ chosen: currentChosenStatus == 'Backlog' }"
+            @click="chooseStatus('Backlog')"
+          >
+            Backlog
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -185,6 +269,68 @@ const allData = [
 
   .active {
     background-color: #04aa6d;
+  }
+}
+
+.add-backlog-modal {
+  background: var(--base-modal-background);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+
+  .section-to-be-edited {
+    width: 800px;
+    height: 553px;
+    background: var(--base-white);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+
+    .close-icon {
+      width: 28px;
+      height: 28px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    .modal-fields {
+      margin: 60px 20px 20px 20px;
+
+      input.note-title {
+        width: 100%;
+        padding: 15px 20px;
+        margin: 8px 0;
+        border: none;
+        border-bottom: 0.5px solid var(--base-dark-pink);
+        -webkit-transition: 0.2s;
+      }
+
+      input.note-title:focus {
+        outline: none !important;
+        border: 3px solid var(--base-light-pink);
+      }
+
+      .status-section {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        .note-status {
+          cursor: pointer;
+          border-radius: 10px;
+          padding: 10px 20px;
+        }
+
+        .chosen {
+          color: var(--base-dark-pink);
+          background: var(--base-transparent-pink);
+        }
+      }
+    }
   }
 }
 

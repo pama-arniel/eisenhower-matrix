@@ -4,7 +4,10 @@
   --base-black: #000000;
   --base-light-pink: #f9f3f3;
   --base-dark-pink: #f25287;
+  --base-transparent-pink: rgba(242, 82, 135, 0.2);
   --base-gray: #6e7c7c;
+  --base-gray-2: #e5e5e5;
+  --base-modal-background: rgba(196, 196, 196, 0.75);
 }
 
 * {
@@ -49,6 +52,22 @@
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
+  line-height: normal;
+}
+
+.Edit-Note-Title {
+  color: var(--base-black);
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.Edit-Note-Status {
+  color: var(--base-gray);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
   line-height: normal;
 }
 
